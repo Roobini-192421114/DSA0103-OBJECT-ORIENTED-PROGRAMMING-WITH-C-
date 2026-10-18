@@ -1,0 +1,3 @@
+#include <iostream>
+bool peak(int h){return(h>=8&&h<10)||(h>=17&&h<20);}long long fare(int z,int h){if(z<1||z>3||h<0||h>23)return -1;long long b=z*1000LL;return peak(h)?b+b*20/100:b;}
+int main(){struct T{int z,h;long long e;const char*n;};T ts[]={{1,7,1000,"Inner off peak"},{1,8,1200,"08 start"},{2,10,2000,"10 end"},{3,17,3600,"17 start"},{3,20,3000,"20 end"},{4,12,-1,"Invalid zone"}};int ok=0;for(auto&t:ts){auto a=fare(t.z,t.h);bool pass=a==t.e;ok+=pass;std::cout<<(pass?"PASS ":"FAIL ")<<t.n<<" expected="<<t.e<<" actual="<<a<<"\n";}std::cout<<"Summary "<<ok<<"/6 passed\n";return ok==6?0:1;}
