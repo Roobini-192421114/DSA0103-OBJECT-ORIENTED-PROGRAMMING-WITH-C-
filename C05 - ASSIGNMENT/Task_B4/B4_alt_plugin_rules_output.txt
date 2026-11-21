@@ -1,0 +1,4 @@
+loaded 5 rules (adding TELE needed NO recompile)
+rule interpretation (string lookup + eval): 71.9271 ms  sum=1.65119e+11
+compiled virtual call                    : 33.0595 ms  sum=1.65119e+11
+sizeof(Rule)=24 bytes per rule type (N rule types, not N classes)

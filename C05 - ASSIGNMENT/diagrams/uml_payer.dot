@@ -1,0 +1,8 @@
+digraph G { rankdir=BT; node [shape=record, fontname="Helvetica", fontsize=10]; edge [arrowhead=empty];
+Payer [label="{«abstract»\nPayer||+ «virtual» ~Payer()\l+ «pure virtual» amountCovered(const Bill&) const : double\l+ «pure virtual» name() const : string\l}", style=filled, fillcolor="#e8f0fe"];
+SP [label="{SelfPay||+ amountCovered() «override» → 0\l}"];
+IN [label="{Insurance|- limit_, copayPct_ : double\l|+ amountCovered() «override»\l   (throws ClaimError)\l}"];
+GV [label="{GovernmentScheme|- rates_ : map<string,double>\l|+ amountCovered() «override»\l   (throws UnknownPackageError)\l}"];
+CP [label="{CorporatePayer  (NEW, B4)|- perBillCap_ : double\l|+ amountCovered() «override»\l}", style=dashed];
+SP->Payer; IN->Payer; GV->Payer; CP->Payer;
+Bill [label="{Bill}"]; Payer->Bill [arrowhead=open, style=dashed, label="uses"]; }

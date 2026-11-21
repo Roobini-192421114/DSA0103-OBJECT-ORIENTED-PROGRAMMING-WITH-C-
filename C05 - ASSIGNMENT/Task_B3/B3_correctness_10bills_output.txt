@@ -1,0 +1,11 @@
+bill 1: virtual=1700 switch=1700 hand=1700  OK
+bill 2: virtual=300 switch=300 hand=300  OK
+bill 3: virtual=51000 switch=51000 hand=51000  OK
+bill 4: virtual=2800 switch=2800 hand=2800  OK
+bill 5: virtual=33000 switch=33000 hand=33000  OK
+bill 6: virtual=25000 switch=25000 hand=25000  OK
+bill 7: virtual=18000 switch=18000 hand=18000  OK
+bill 8: virtual=6200 switch=6200 hand=6200  OK
+bill 9: virtual=3400 switch=3400 hand=3400  OK
+bill 10: virtual=14000 switch=14000 hand=14000  OK
+Totals: virtual=155400 switch=155400 hand=155400  -> ALL AGREE

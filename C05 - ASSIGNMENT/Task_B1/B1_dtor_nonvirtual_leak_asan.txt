@@ -1,0 +1,13 @@
+
+=================================================================
+==418==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 8000 byte(s) in 1 object(s) allocated from:
+    #0 0x7fd56ecfe6c8 in operator new[](unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:98
+    #1 0x56025852e53b in InPatient::InPatient() /home/claude/R/Task_B1/B1_destructor_experiment.cpp:11
+    #2 0x56025852e314 in main /home/claude/R/Task_B1/B1_destructor_experiment.cpp:18
+    #3 0x7fd56e42a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: 8cebda42d140fc2b09639f8b13a5d5f2e617ef09)
+    #4 0x7fd56e42a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: 8cebda42d140fc2b09639f8b13a5d5f2e617ef09)
+    #5 0x56025852e224 in _start (/tmp/d2+0x1224) (BuildId: 1c8f42a43e1c62e53946e55d52a64504df96436d)
+
+SUMMARY: AddressSanitizer: 8000 byte(s) leaked in 1 allocation(s).

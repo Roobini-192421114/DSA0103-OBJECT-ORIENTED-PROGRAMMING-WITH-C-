@@ -1,0 +1,2 @@
+throw;   -> still RejectedClaim
+throw e; -> sliced to ClaimError

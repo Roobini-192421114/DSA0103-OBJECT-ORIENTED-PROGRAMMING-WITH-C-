@@ -1,0 +1,13 @@
+
+=================================================================
+==382==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 80 byte(s) in 1 object(s) allocated from:
+    #0 0x7f34a40fe6c8 in operator new[](unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:98
+    #1 0x5571b01f755e in manual(int) /home/claude/R/Task_A5/A5_alt_manual_delete.cpp:11
+    #2 0x5571b01f785e in main /home/claude/R/Task_A5/A5_alt_manual_delete.cpp:25
+    #3 0x7f34a382a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: 8cebda42d140fc2b09639f8b13a5d5f2e617ef09)
+    #4 0x7f34a382a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: 8cebda42d140fc2b09639f8b13a5d5f2e617ef09)
+    #5 0x5571b01f7384 in _start (/tmp/a5a+0x2384) (BuildId: 724e35087e779282781d5e2c813cd4cd84ae5110)
+
+SUMMARY: AddressSanitizer: 80 byte(s) leaked in 1 allocation(s).

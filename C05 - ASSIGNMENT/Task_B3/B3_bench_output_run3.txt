@@ -1,0 +1,12 @@
+sizeof: VBill-derived (largest VIP)=40 (+16 malloc rounding, + 8-byte pointer in vector), SBill=32, VarBill=40, POP=16, PIP=32, PEM=24
+
+B3.2  total() over n bills, best of 5 runs (-O2)
+        10 | virtual      0.000 ms | switch      0.000 ms | variant      0.000 ms | sums equal: yes
+      1000 | virtual      0.006 ms | switch      0.002 ms | variant      0.002 ms | sums equal: yes
+   1000000 | virtual     11.399 ms | switch      8.294 ms | variant      9.203 ms | sums equal: yes
+  10000000 | virtual    117.476 ms | switch     85.988 ms | variant     96.858 ms | sums equal: yes
+
+B3.3  validate 1,000,000 bills
+  0% invalid | return code     2.785 ms | optional     2.742 ms | exception      2.715 ms | rejected 0/0/0
+  1% invalid | return code     2.808 ms | optional     2.820 ms | exception     10.325 ms | rejected 10065/10065/10065
+ 50% invalid | return code     4.851 ms | optional     4.770 ms | exception    404.842 ms | rejected 500319/500319/500319

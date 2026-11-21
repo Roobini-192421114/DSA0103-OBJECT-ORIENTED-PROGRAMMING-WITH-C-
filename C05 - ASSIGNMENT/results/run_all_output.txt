@@ -1,0 +1,212 @@
+
+=== A2 predict (virtual dtor) ===
+500 ~OPBill ~Bill 
+
+=== A2 predict (non-virtual dtor) ===
+500 ~Bill 
+
+=== A2 alt: dynamic_cast vs virtual ===
+dynamic_cast chain: sum=4.02e+10  61.4998 ms
+virtual call      : sum=4.02e+10  15.6008 ms
+sizeof(VBill)=8 (one vptr)
+
+=== A3 alt: std::function payers ===
+SelfPay covers 0
+Insurance(60000,20%) covers 40800
+Government(45000) covers 45000
+sizeof(Policy)=32 bytes per payer (captures are in the closure)
+Corporate covers 10000
+
+=== A4 alt: return codes ===
+approved 40000
+audit: claim above cover
+rejected: claim above cover
+audit: negative charge
+rejected: negative charge
+
+=== A5 predict ===
+~f ~main caught 42
+
+=== A5 alt: manual delete (ASan shows leak) ===
+
+=================================================================
+==499==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 80 byte(s) in 1 object(s) allocated from:
+    #0 0x7fb7634fe6c8 in operator new[](unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:98
+    #1 0x55b7e2e2e5fe in manual(int) Task_A5/A5_alt_manual_delete.cpp:11
+    #2 0x55b7e2e2e950 in main Task_A5/A5_alt_manual_delete.cpp:25
+    #3 0x7fb76242a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: 8cebda42d140fc2b09639f8b13a5d5f2e617ef09)
+    #4 0x7fb76242a28a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: 8cebda42d140fc2b09639f8b13a5d5f2e617ef09)
+    #5 0x55b7e2e2e424 in _start (/home/claude/R/build/a5a+0x6424) (BuildId: ce5f69823ba72b32bd142004bab86e0c0ab508ed)
+
+SUMMARY: AddressSanitizer: 80 byte(s) leaked in 1 allocation(s).
+
+=== B1 complete the code ===
+OP Ravi: 1700
+IP Meena: 47500
+Total 49200
+
+=== B1 non-virtual pure (compile error expected) ===
+Task_B1/B1_error_nonvirtual_pure.cpp:12:12: error: initializer specified for non-virtual method 'double Bill::total() const'
+   12 |     double total() const = 0;
+      |            ^~~~~
+Task_B1/B1_error_nonvirtual_pure.cpp:27:12: error: 'double OutPatient::total() const' marked 'override', but does not override
+   27 |     double total() const override { return consultation + tests; }
+      |            ^~~~~
+
+=== B1.3 non-virtual total() ===
+OP Ravi: 0
+IP Meena: 0
+Total 0   (expected 49200)
+
+=== B1.1 billing tests (ASan) ===
+OP Ravi: 1700
+IP Meena: 51000
+DC Arun: 25000
+EM Priya: 6200
+Day total = 83900  (hand: 83900)
+
+payer       bill  total   covered  patientPays  expected  result
+SelfPay     OP    1700   0   1700   0   PASS
+SelfPay     IP    51000   0   51000   0   PASS
+SelfPay     DC    25000   0   25000   0   PASS
+SelfPay     EM    6200   0   6200   0   PASS
+Insurance   OP    1700   1360   340   1360   PASS
+Insurance   IP    51000   40800   10200   40800   PASS
+Insurance   DC    25000   20000   5000   20000   PASS
+Insurance   EM    6200   4960   1240   4960   PASS
+Government  OP    1700   1000   700   1000   PASS
+Government  IP    51000   45000   6000   45000   PASS
+Government  DC    25000   22000   3000   22000   PASS
+Government  EM    6200   5000   1200   5000   PASS
+
+Passed 12, failed 0
+
+=== B1.4 virtual destructor OK ===
+47500
+~InPatient (itemised freed)
+~Bill
+
+=== B1.4 NON-virtual destructor (ASan error expected) ===
+=================================================================
+==537==ERROR: AddressSanitizer: new-delete-type-mismatch on 0x502000000010 in thread T0:
+  object passed to delete has wrong type:
+  size of the allocated type:   16 bytes;
+  size of the deallocated type: 8 bytes.
+    #0 0x7fa3708ff5e8 in operator delete(void*, unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:164
+    #1 0x55f9d981277d in main Task_B1/B1_destructor_experiment.cpp:20
+    #2 0x7fa36f82a1c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: 8cebda42d140fc2b09639f8b13a5d5f2e617ef09)
+
+=== B1 alt: templates ===
+OP total 2000, IP total 47500, day total 49500
+sizeof(OP)=16 sizeof(IP)=24 (no vptr)
+
+=== B2 predict ===
+ok done caught negative [log too large] caught too large 
+
+=== B2 complete the code ===
+approved 40000
+audit: exceeds cover
+claim rejected: exceeds cover
+error: negative amount
+
+=== B2 complete with 'throw e;' ===
+approved 40000
+audit: exceeds cover
+claim rejected: exceeds cover
+error: negative amount
+
+=== B2 throw vs throw e (slicing) ===
+throw;   -> still RejectedClaim
+throw e; -> sliced to ClaimError
+
+=== B2 error conditions (incl. bad_alloc) ===
+[negative consultation charge]
+  +tracker1
+  ~tracker1
+  NegativeChargeError: negative consultation
+[negative number of days]
+  +tracker2
+  ~tracker2
+  NegativeChargeError: negative days
+[claim above cover]
+  +tracker3
+  ~tracker3
+  ClaimError: claim 51000 exceeds cover 30000
+[unknown package code]
+  +tracker4
+  ~tracker4
+  UnknownPackageError: unknown package 'ZZZ99'
+[missing patient record]
+  +tracker5
+  ~tracker5
+  PatientRecordError: no record for patient 'Unknown Person'
+[stod accepts a numeric prefix ("12abc") -> must check pos]
+  +tracker6
+  stod("12abc") returned 12 with no exception, consumed 2 of 5 chars
+  ~tracker6
+  std::invalid_argument: trailing characters in number
+[stod on pure text]
+  +tracker7
+  ~tracker7
+  std::invalid_argument: stod
+[memory allocation failure]
+  +tracker8
+  ~tracker8
+  std::bad_alloc: std::bad_alloc
+[top-level catch(...) keeps the program alive]
+  +outer
+  +inner
+  ~inner
+  ~outer
+  catch(...) reached; program continues
+program still running -> finished normally
+
+=== B2 error conditions under ASan (bad_alloc test skipped: ASan aborts on >1 TB) ===
+  ~outer
+  catch(...) reached; program continues
+program still running -> finished normally
+
+=== B3.1 correctness on 10 bills ===
+bill 1: virtual=1700 switch=1700 hand=1700  OK
+bill 2: virtual=300 switch=300 hand=300  OK
+bill 3: virtual=51000 switch=51000 hand=51000  OK
+bill 4: virtual=2800 switch=2800 hand=2800  OK
+bill 5: virtual=33000 switch=33000 hand=33000  OK
+bill 6: virtual=25000 switch=25000 hand=25000  OK
+bill 7: virtual=18000 switch=18000 hand=18000  OK
+bill 8: virtual=6200 switch=6200 hand=6200  OK
+bill 9: virtual=3400 switch=3400 hand=3400  OK
+bill 10: virtual=14000 switch=14000 hand=14000  OK
+Totals: virtual=155400 switch=155400 hand=155400  -> ALL AGREE
+
+=== B3.2/B3.3 benchmark (-O2) ===
+sizeof: VBill-derived (largest VIP)=40 (+16 malloc rounding, + 8-byte pointer in vector), SBill=32, VarBill=40, POP=16, PIP=32, PEM=24
+
+B3.2  total() over n bills, best of 5 runs (-O2)
+        10 | virtual      0.000 ms | switch      0.000 ms | variant      0.000 ms | sums equal: yes
+      1000 | virtual      0.006 ms | switch      0.002 ms | variant      0.002 ms | sums equal: yes
+   1000000 | virtual     13.908 ms | switch      9.858 ms | variant     10.855 ms | sums equal: yes
+  10000000 | virtual    117.420 ms | switch     89.246 ms | variant     94.422 ms | sums equal: yes
+
+B3.3  validate 1,000,000 bills
+  0% invalid | return code     3.108 ms | optional     3.014 ms | exception      2.983 ms | rejected 0/0/0
+  1% invalid | return code     3.217 ms | optional     3.471 ms | exception     10.053 ms | rejected 10065/10065/10065
+ 50% invalid | return code     3.816 ms | optional     3.834 ms | exception    368.132 ms | rejected 500319/500319/500319
+
+=== B4.1 extension + earlier tests (ASan) ===
+PASS new payer on each bill: got 500, expected 500
+caught NegativeChargeError: negative fee
+caught ClaimError: claim 500 exceeds cover 100
+caught UnknownPackageError: unknown package 'TELE01'
+caught BillingError: no record for patient 'Ghost'
+PASS exceptions caught: got 4, expected 4
+
+Passed 22, failed 0
+
+=== B4 alt: rules from configuration ===
+loaded 5 rules (adding TELE needed NO recompile)
+rule interpretation (string lookup + eval): 84.4926 ms  sum=1.65119e+11
+compiled virtual call                    : 36.3608 ms  sum=1.65119e+11
+sizeof(Rule)=24 bytes per rule type (N rule types, not N classes)

@@ -1,0 +1,40 @@
+[negative consultation charge]
+  +tracker1
+  ~tracker1
+  NegativeChargeError: negative consultation
+[negative number of days]
+  +tracker2
+  ~tracker2
+  NegativeChargeError: negative days
+[claim above cover]
+  +tracker3
+  ~tracker3
+  ClaimError: claim 51000 exceeds cover 30000
+[unknown package code]
+  +tracker4
+  ~tracker4
+  UnknownPackageError: unknown package 'ZZZ99'
+[missing patient record]
+  +tracker5
+  ~tracker5
+  PatientRecordError: no record for patient 'Unknown Person'
+[stod accepts a numeric prefix ("12abc") -> must check pos]
+  +tracker6
+  stod("12abc") returned 12 with no exception, consumed 2 of 5 chars
+  ~tracker6
+  std::invalid_argument: trailing characters in number
+[stod on pure text]
+  +tracker7
+  ~tracker7
+  std::invalid_argument: stod
+[memory allocation failure]
+  +tracker8
+  ~tracker8
+  std::bad_alloc: std::bad_alloc
+[top-level catch(...) keeps the program alive]
+  +outer
+  +inner
+  ~inner
+  ~outer
+  catch(...) reached; program continues
+program still running -> finished normally

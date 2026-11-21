@@ -1,0 +1,4 @@
+digraph G { rankdir=BT; node [shape=box, fontname="Helvetica", fontsize=10]; edge [arrowhead=empty];
+ex [label="std::exception"]; rt [label="std::runtime_error"]; ia [label="std::invalid_argument\n(std::stod)"]; ba [label="std::bad_alloc\n(new)"];
+BE [label="BillingError", style=filled, fillcolor="#e8f0fe"]; NC [label="NegativeChargeError"]; CE [label="ClaimError"]; UP [label="UnknownPackageError"]; PR [label="PatientRecordError"];
+rt->ex; BE->rt; NC->BE; CE->BE; UP->BE; PR->BE; ia->ex [label=" via logic_error"]; ba->ex; }

@@ -1,0 +1,28 @@
+PASS old: SelfPay covered: got 0, expected 0
+PASS old: Insurance covered: got 1360, expected 1360
+PASS old: Government covered: got 1000, expected 1000
+PASS old: SelfPay covered: got 0, expected 0
+PASS old: Insurance covered: got 40800, expected 40800
+PASS old: Government covered: got 45000, expected 45000
+PASS old: SelfPay covered: got 0, expected 0
+PASS old: Insurance covered: got 20000, expected 20000
+PASS old: Government covered: got 22000, expected 22000
+PASS old: SelfPay covered: got 0, expected 0
+PASS old: Insurance covered: got 4960, expected 4960
+PASS old: Government covered: got 5000, expected 5000
+PASS new bill total: got 500, expected 500
+PASS new bill + SelfPay: got 0, expected 0
+PASS new bill + Insurance(20%): got 400, expected 400
+PASS new bill + Government(TELE01=200): got 200, expected 200
+PASS new payer on each bill: got 1700, expected 1700
+PASS new payer on each bill: got 10000, expected 10000
+PASS new payer on each bill: got 10000, expected 10000
+PASS new payer on each bill: got 6200, expected 6200
+PASS new payer on each bill: got 500, expected 500
+caught NegativeChargeError: negative fee
+caught ClaimError: claim 500 exceeds cover 100
+caught UnknownPackageError: unknown package 'TELE01'
+caught BillingError: no record for patient 'Ghost'
+PASS exceptions caught: got 4, expected 4
+
+Passed 22, failed 0

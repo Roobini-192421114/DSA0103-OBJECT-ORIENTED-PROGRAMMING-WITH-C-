@@ -1,0 +1,7 @@
+digraph G { rankdir=TB; node [shape=record, fontname="Helvetica", fontsize=10];
+obj1 [label="{*b → OutPatientBill object|<v>vptr|patient_|package_|consultation_|tests_}"];
+obj2 [label="{InPatientBill object|<v>vptr|patient_|package_|days_ ...}"];
+vt1 [label="{vtable for OutPatientBill|[0] ~OutPatientBill()|[1] ~OutPatientBill() (deleting)|[2] OutPatientBill::total()|[3] OutPatientBill::type()|[4] Bill::print()}", style=filled, fillcolor="#e6f4ea"];
+vt2 [label="{vtable for InPatientBill|[0] ~InPatientBill()|[1] ~InPatientBill() (deleting)|[2] InPatientBill::total()|[3] InPatientBill::type()|[4] Bill::print()}", style=filled, fillcolor="#fef7e0"];
+vt0 [label="{vtable for Bill (abstract)|[0] ~Bill()|[1] ~Bill() (deleting)|[2] __cxa_pure_virtual  (total = 0)|[3] __cxa_pure_virtual  (type = 0)|[4] Bill::print()}", style=filled, fillcolor="#e8f0fe"];
+obj1:v->vt1; obj2:v->vt2; }

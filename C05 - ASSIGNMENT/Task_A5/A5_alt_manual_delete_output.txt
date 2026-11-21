@@ -1,0 +1,4 @@
+manual caught E1
+raii   caught E1
+manual caught E2
+raii   caught E2

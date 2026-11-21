@@ -1,0 +1,21 @@
+OP Ravi: 1700
+IP Meena: 51000
+DC Arun: 25000
+EM Priya: 6200
+Day total = 83900  (hand: 83900)
+
+payer       bill  total   covered  patientPays  expected  result
+SelfPay     OP    1700   0   1700   0   PASS
+SelfPay     IP    51000   0   51000   0   PASS
+SelfPay     DC    25000   0   25000   0   PASS
+SelfPay     EM    6200   0   6200   0   PASS
+Insurance   OP    1700   1360   340   1360   PASS
+Insurance   IP    51000   40800   10200   40800   PASS
+Insurance   DC    25000   20000   5000   20000   PASS
+Insurance   EM    6200   4960   1240   4960   PASS
+Government  OP    1700   1000   700   1000   PASS
+Government  IP    51000   45000   6000   45000   PASS
+Government  DC    25000   22000   3000   22000   PASS
+Government  EM    6200   5000   1200   5000   PASS
+
+Passed 12, failed 0

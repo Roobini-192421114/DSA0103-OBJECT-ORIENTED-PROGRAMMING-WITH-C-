@@ -1,0 +1,5 @@
+SelfPay covers 0
+Insurance(60000,20%) covers 40800
+Government(45000) covers 45000
+sizeof(Policy)=32 bytes per payer (captures are in the closure)
+Corporate covers 10000

@@ -1,0 +1,2 @@
+OP total 2000, IP total 47500, day total 49500
+sizeof(OP)=16 sizeof(IP)=24 (no vptr)

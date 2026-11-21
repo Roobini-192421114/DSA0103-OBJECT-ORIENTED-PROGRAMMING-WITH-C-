@@ -1,0 +1,7 @@
+digraph G { rankdir=BT; node [shape=record, fontname="Helvetica", fontsize=10]; edge [arrowhead=empty];
+Bill [label="{«abstract»\nBill|# patient_ : string\l# package_ : string\l|+ «virtual» ~Bill()\l+ «pure virtual» total() const : double\l+ «pure virtual» type() const : string\l+ «virtual» print(os) const\l+ patient() const noexcept\l+ package() const noexcept\l}", style=filled, fillcolor="#e8f0fe"];
+OP [label="{OutPatientBill|- consultation_, tests_ : double\l|+ total() «override»\l+ type() «override» → \"OP\"\l}"];
+IP [label="{InPatientBill|- days_ : int\l- perDay_, procedures_, medicines_ : double\l|+ total() «override»\l+ type() «override» → \"IP\"\l}"];
+DC [label="{DayCareBill|- package_price_ : double\l|+ total() «override»\l+ type() «override» → \"DC\"\l}"];
+EM [label="{EmergencyBill|- base_, hours_, hourly_ : double\l|+ total() «override»\l+ type() «override» → \"EM\"\l}"];
+OP->Bill; IP->Bill; DC->Bill; EM->Bill; }

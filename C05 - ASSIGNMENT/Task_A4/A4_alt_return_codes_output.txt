@@ -1,0 +1,5 @@
+approved 40000
+audit: claim above cover
+rejected: claim above cover
+audit: negative charge
+rejected: negative charge
